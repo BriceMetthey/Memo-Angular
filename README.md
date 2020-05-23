@@ -1,4 +1,4 @@
-# Memo-Angular
+# Mémo Angular
 
 # Références documentaires
 
