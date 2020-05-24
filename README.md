@@ -18,6 +18,10 @@ https://www.javaguides.net/p/angular-9-tutorial.html
 
 `ng serve --open`
 
+## Integrer Bootstrap et JQuery
+
+`npm install bootstrap jquery --save`
+
 ## Components, Services, and Modules
 
 Components
