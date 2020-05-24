@@ -1,9 +1,22 @@
 # Mémo Angular
 
-# Références documentaires
+## Références documentaires
 
 https://www.javaguides.net/p/angular-9-tutorial.html
 
+## Setup Angular
+
+`npm install -g @angular/cli`
+
+`ng --version`
+
+`ng new my-app`
+
+## Démarrage d'une appli Angular
+
+`cd my-app`
+
+`ng serve --open`
 
 ## Components, Services, and Modules
 
