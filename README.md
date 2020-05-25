@@ -270,6 +270,62 @@ export class AppRoutingModule { }
 
 ```
 
-## Partie Lister les employés
+## Liste des employés
 
 On modifie src/app/employee-list/employee-list.component.ts
+
+```typescript
+import { Component, OnInit } from '@angular/core';
+import { Employee } from '../model/employee';
+import { EmployeeService } from '../service/employee.service';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-employee-list',
+  templateUrl: './employee-list.component.html',
+  styleUrls: ['./employee-list.component.css']
+})
+export class EmployeeListComponent implements OnInit {
+
+  employees: Array<Employee>;
+
+  constructor(private employeeService: EmployeeService, private router: Router) { }
+
+  ngOnInit(): void {
+    this.reloadData();
+  }
+
+  reloadData() {
+    this.employeeService.getAll()
+      .subscribe(
+        values => {
+          this.employees = values;
+        },
+        errors => {
+          console.log("GET call in error", errors);
+        },
+        () => {
+          console.log("The GET observable is now completed.");
+        });
+  }
+
+
+  deleteEmployee(id: number) {
+    this.employeeService.deleteEmployee(id)
+      .subscribe(
+        data => {
+          console.log("Delete Employee is Ok :", data);
+          this.reloadData();
+        },
+        error => console.log("Error Deleting Employee :",error),
+        () => {
+          console.log("Delete operation is now completed.");
+        });
+  }
+
+  employeeDetails(id: number){
+    this.router.navigate(['details', id]);
+  }
+
+}
+```
