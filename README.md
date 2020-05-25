@@ -366,3 +366,5 @@ Modifier : src/app/employee-list/employee-list.component.html
     </div>
 </div>
 ```
+
+## Creation d'un employé
