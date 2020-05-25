@@ -95,6 +95,30 @@ export class Employee {
 
 ```
 
+## Le service
+
+Activation du module pour le client Http
+
+On modifie : src/app/app.module.ts
+
+```typescript
+import {HttpClientModule} from '@angular/common/http';
+
+@NgModule({
+    declarations: [
+        AppComponent
+    ],
+    imports: [
+        BrowserModule,
+        HttpClientModule
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
+})
+export class AppModule {
+}
+```
+
 ## Partie Lister les employés
 
 On modifie src/app/employee-list/employee-list.component.ts
