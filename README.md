@@ -330,7 +330,7 @@ export class EmployeeListComponent implements OnInit {
 }
 ```
 
-
+Modifier : src/app/employee-list/employee-list.component.html
 
 ```
 <div class="card">
@@ -357,7 +357,7 @@ export class EmployeeListComponent implements OnInit {
                     <td>{{employee.email}}</td>
                     <td>{{employee.active}}</td>
                     <td><button (click)="deleteEmployee(employee.id)"   class="btn btn-danger">Delete</button>
-                        <button (click)=""                              class="btn btn-warning" style="margin-left: 10px">Update</button>
+                        <button (click)="updateEmployee(employee.id)"   class="btn btn-warning" style="margin-left: 10px">Update</button>
                         <button (click)="employeeDetails(employee.id)"  class="btn btn-info"    style="margin-left: 10px">Details</button>
                     </td>
                 </tr>
