@@ -329,3 +329,40 @@ export class EmployeeListComponent implements OnInit {
 
 }
 ```
+
+
+
+```
+<div class="card">
+    <div class="card-header">
+        <h2>Employee List</h2>
+    </div>
+    <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>Email</th>
+                    <th>Active</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let employee of employees">
+                    <td>{{employee.id}}</td>
+                    <td>{{employee.firstName}}</td>
+                    <td>{{employee.lastName}}</td>
+                    <td>{{employee.email}}</td>
+                    <td>{{employee.active}}</td>
+                    <td><button (click)="deleteEmployee(employee.id)"   class="btn btn-danger">Delete</button>
+                        <button (click)=""                              class="btn btn-warning" style="margin-left: 10px">Update</button>
+                        <button (click)="employeeDetails(employee.id)"  class="btn btn-info"    style="margin-left: 10px">Details</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+```
