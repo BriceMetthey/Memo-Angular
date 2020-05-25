@@ -63,11 +63,11 @@ Employee Class
 
 ## Angular CLI
 
-cd src/app
+`cd src/app`
 
-- ng generate service service/employee
-- ng generate component create-employee
-- ng generate component employee-details
-- ng generate component employee-list
-- ng generate component update-employee
-- ng generate class model/Employee 
+- `ng generate service service/employee`
+- `ng generate component create-employee`
+- `ng generate component employee-details`
+- `ng generate component employee-list`
+- `ng generate component update-employee`
+- `ng generate class model/Employee`
