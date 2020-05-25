@@ -43,10 +43,32 @@ Dans angular.json ajouter :
 
 ## Avant de commencer
 
-Vider le fichier : src/app/app.component.html
+Modifier le fichier : src/app/app.component.html
 
 ```
-<router-outlet></router-outlet>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <!-- Links -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a routerLink="employees" class="nav-link" routerLinkActive="active">Employee List</a>
+        </li>
+        <li class="nav-item">
+            <a routerLink="add" class="nav-link" routerLinkActive="active">Add Employee</a>
+        </li>
+    </ul>
+</nav>
+<div class="container">
+    <br>
+    <h2>{{title}}</h2>
+    <hr>
+    <router-outlet></router-outlet> 
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <span>Test Footer</span>
+    </div>
+</footer>
 ```
 
 Modifier le fichier : src/app/app.component.ts
