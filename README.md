@@ -59,7 +59,7 @@ Modules
 * AppRoutingModule
 
 Employee Class
-* employee.ts: class Employee (id, firstName, lastName, emailId)
+* employee.ts: class Employee
 
 ## Angular CLI
 
@@ -71,3 +71,17 @@ Employee Class
 - `ng generate component employee-list`
 - `ng generate component update-employee`
 - `ng generate class model/Employee`
+
+## Le modèle
+
+```typescript
+
+export class Employee {
+    id: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+    active: boolean;
+}
+
+```
