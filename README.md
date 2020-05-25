@@ -74,6 +74,8 @@ Employee Class
 
 ## Le modèle
 
+Modification de src/app/model/employee.ts
+
 ```typescript
 
 export class Employee {
