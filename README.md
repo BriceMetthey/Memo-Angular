@@ -51,21 +51,21 @@ Components
 * update-employee
 
 Services
-* employee.service.ts - Service for Http Client methods
+* employee.service.ts (HTTP)
 
 Modules
 * FormsModule
 * HttpClientModule
 * AppRoutingModule
 
-Employee Class (Typescript class)
+Employee Class
 * employee.ts: class Employee (id, firstName, lastName, emailId)
 
 ## Angular CLI
 
-- ng g s employee
-- ng g c create-employee
-- ng g c employee-details
-- ng g c employee-list
-- ng g c update-employee
-- ng g class Employee 
+- ng generate service service/employee
+- ng generate component create-employee
+- ng generate component employee-details
+- ng generate component employee-list
+- ng generate component update-employee
+- ng generate class model/Employee 
