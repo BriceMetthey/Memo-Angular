@@ -86,7 +86,7 @@ Modification de src/app/model/employee.ts
 ```typescript
 
 export class Employee {
-    id: number;
+    id?: number;
     firstName: string;
     lastName: string;
     email: string;
