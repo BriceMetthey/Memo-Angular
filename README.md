@@ -63,6 +63,8 @@ Employee Class
 
 ## Angular CLI
 
+cd src/app
+
 - ng generate service service/employee
 - ng generate component create-employee
 - ng generate component employee-details
