@@ -49,6 +49,21 @@ Vider le fichier : src/app/app.component.html
 <router-outlet></router-outlet>
 ```
 
+Modifier le fichier : src/app/app.component.ts
+
+```typescript
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'Angular + Spring Boot CRUD';
+}
+```
+
 ## Liste des Composants, Services, et Modules
 
 Components
