@@ -41,6 +41,13 @@ Dans angular.json ajouter :
 
 ```
 
+## Avant de commencer
+
+Vider le fichier : src/app/app.component.html
+
+```
+<router-outlet></router-outlet>
+```
 
 ## Liste des Composants, Services, et Modules
 
