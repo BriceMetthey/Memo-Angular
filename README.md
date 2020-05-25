@@ -42,12 +42,13 @@ Dans angular.json ajouter :
 ```
 
 
-## Components, Services, and Modules
+## Liste des Composants, Services, et Modules
 
 Components
 * create-employee
 * employee-list
 * employee-details
+* update-employee
 
 Services
 * employee.service.ts - Service for Http Client methods
