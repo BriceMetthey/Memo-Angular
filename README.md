@@ -94,3 +94,7 @@ export class Employee {
 }
 
 ```
+
+## Partie Lister les employés
+
+On modifie src/app/employee-list/employee-list.component.ts
