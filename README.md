@@ -394,3 +394,170 @@ Le fichier : src/styles.css
 ```
 
 ## Formulaire de création
+
+```typescript
+
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+
+import { EmployeeService } from '../service/employee.service';
+import { Employee } from '../model/employee';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-create-employee',
+  templateUrl: './create-employee.component.html',
+  styleUrls: ['./create-employee.component.css']
+})
+export class CreateEmployeeComponent implements OnInit {
+
+  model: Employee;
+  submitted = false;
+
+  constructor(
+    private employeeService: EmployeeService,
+    private router: Router
+  ) {   }
+
+  ngOnInit() {
+    this.model = new Employee();
+    this.model.active = true; // Radio button pre-selectinonné
+  }
+
+ 
+  onSubmit() { 
+    this.submitted = true;
+    
+    this.employeeService.createEmployee(this.model).subscribe(
+      data => console.log(data),
+      error => console.log(error)
+    );
+  }
+
+  gotoList() {
+    this.router.navigate(['/employees']);
+  }
+
+  // C'est un getter. On l'appel comme une propriété.
+  get diagnostic() { 
+    return JSON.stringify(this.model);
+  }
+
+}
+
+
+```
+
+```html
+
+<div class="card">
+  <div class="card-header">
+    <h2>Create new Employee</h2>
+  </div>
+  <div class="card-body">
+
+
+
+
+    <div [hidden]="submitted">
+
+      <p>
+        Diagnostique en temps réel (Option1) :
+        {{diagnostic}}
+      </p>
+
+      <form (ngSubmit)="onSubmit()" #employeeForm="ngForm">
+
+        <div class="form-group">
+
+          <label for="labelFirstName">First name</label>
+
+          <input type="text" class="form-control" id="firstName" 
+            required
+            [(ngModel)]="model.firstName"  name="firstName"
+            #firstName="ngModel" #spy>
+                                         
+            <div [hidden]="firstName.valid || firstName.pristine" class="alert alert-danger">FirstName is required </div>
+
+            *Le modele en cours : {{model.firstName}}
+            <br>*Etat du input #spy : {{spy.className}}
+        </div>
+
+        <div class="form-group">
+          <label for="labelLastName">Last name</label>
+          <input type="text" class="form-control" id="lastName"
+            required   
+            [(ngModel)]="model.lastName" name="lastName"
+            #lastName="ngModel">
+
+          <div [hidden]="lastName.valid || lastName.pristine" class="alert alert-danger">LastName is required </div>
+
+          *Le modele en cours : {{model.lastName}}
+        </div>
+
+        <div class="form-group">
+          <label for="labelEmail">Email</label>
+          <input type="email" class="form-control" id="email"
+            required
+            [(ngModel)]="model.email" name="email"
+            placeholder="name@example.com"
+            #email="ngModel"> 
+
+            <div [hidden]="email.valid || email.pristine" class="alert alert-danger">Email is required </div>
+
+          *Le modele en cours : {{model.email}}
+        </div>
+
+        <div class="form-group">
+ 
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="active" [(ngModel)]="model.active" [value]="true">
+            <label class="form-check-label" for="radio1">Active</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="active" [(ngModel)]="model.active" [value]="false">
+            <label class="form-check-label" for="radio2">Not Active</label>
+          </div>
+          <p> *Le modele en cours : {{model.active}}</p>
+
+        </div>
+
+        <button type="submit" class="btn btn-primary" [disabled]="!employeeForm.form.valid">Submit</button>
+
+      </form>
+    </div>
+
+    <p>
+      Diagnostique en temps réel (Option2) :
+      {{ employeeForm.value | json }}
+    </p>
+
+
+
+    <div [hidden]="!submitted">
+      <h2>You submitted the following:</h2>
+      <div class="row">
+        <div class="col-xs-3">First Name : </div>
+        <div class="col-xs-9">{{ model.firstName }}</div>
+      </div>
+      <div class="row">
+        <div class="col-xs-3">Last Name : </div>
+        <div class="col-xs-9">{{ model.lastName }}</div>
+      </div>
+      <div class="row">
+        <div class="col-xs-3">Email : </div>
+        <div class="col-xs-9">{{ model.email }}</div>
+      </div>
+      <div class="row">
+        <div class="col-xs-3">Active : </div>
+        <div class="col-xs-9">{{ model.active }}</div>
+      </div>
+      <br>
+      <button class="btn btn-primary" (click)="submitted=false">Review</button>
+      <button class="btn btn-info" (click)="gotoList()" style="margin-left: 10px">List</button>
+    </div>
+
+  </div>
+</div>
+
+```
