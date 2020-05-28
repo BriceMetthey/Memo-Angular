@@ -6,6 +6,8 @@ https://angular.io/guide/forms
 
 ## Le back-end 
 
+Rappel : mvn spring-boot:run
+
 Fichier : Employee.java
 
 ```java
