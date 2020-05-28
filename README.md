@@ -44,7 +44,7 @@ Dans angular.json ajouter :
 ## Avant de commencer
 
 
-Modifier le fichier : src/index.html
+Le fichier : src/index.html
 
 ```
 <!doctype html>
@@ -62,9 +62,9 @@ Modifier le fichier : src/index.html
 </html>
 ```
 
-Modifier le fichier : src/app/app.component.html
+Le fichier : src/app/app.component.html
 
-```
+```html
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <!-- Links -->
     <ul class="navbar-nav">
@@ -91,7 +91,7 @@ Modifier le fichier : src/app/app.component.html
 </nav>
 ```
 
-Modifier le fichier : src/app/app.component.ts
+Le fichier : src/app/app.component.ts
 
 ```typescript
 import { Component } from '@angular/core';
@@ -102,7 +102,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Angular + Spring Boot CRUD';
+  title = 'App Angular';
 }
 ```
 
