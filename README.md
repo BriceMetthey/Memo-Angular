@@ -632,6 +632,8 @@ export class UpdateEmployeeComponent implements OnInit {
 
 ```
 
+Fichier : src/app/update-employee/update-employee.component.html
+
 ```html
 
 <div class="card">
