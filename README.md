@@ -378,4 +378,19 @@ Fichier :  src/app/employee-list/employee-list.component.html
 </div>
 ```
 
+## Style général
+
+Le fichier : src/styles.css
+
+```css
+ 
+.ng-valid[required], .ng-valid.required  {
+    border-left: 5px solid #42A948;
+}
+  
+.ng-invalid:not(form)  {
+    border-left: 5px solid #a94442;   
+}
+```
+
 ## Formulaire de création
