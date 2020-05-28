@@ -565,3 +565,252 @@ Fichier : src/app/create-employee/create-employee.component.html
 </div>
 
 ```
+
+## Formulaire de modification
+
+Fichier : 
+
+src/app/update-employee/update-employee.component.ts
+
+```typescript
+
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { EmployeeService } from '../service/employee.service';
+import { Employee } from '../model/employee';
+
+@Component({
+  selector: 'app-update-employee',
+  templateUrl: './update-employee.component.html',
+  styleUrls: ['./update-employee.component.css']
+})
+export class UpdateEmployeeComponent implements OnInit {
+
+  id: number;
+  model: Employee;
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private employeeService: EmployeeService) { }
+
+  ngOnInit() {
+    this.model = new Employee();
+
+    this.id = this.route.snapshot.params['id'];
+    
+    this.employeeService.getEmployee(this.id)
+      .subscribe(
+        data => {
+          console.log(data);
+          this.model = data;
+        }, 
+        error => console.log(error)
+      );
+  }
+
+  updateEmployee() {
+        
+    this.employeeService.updateEmployee(this.id, this.model)
+      .subscribe(
+        data => console.log(data),
+        error => console.log(error)
+      );
+    this.model = new Employee();
+    this.gotoList();
+  }
+
+  onSubmit() {
+    this.updateEmployee();    
+  }
+
+  gotoList() {
+    this.router.navigate(['/employees']);
+  }
+}
+
+
+```
+
+```html
+
+<div class="card">
+    <div class="card-header">
+        <h2>Update employee #{{model.id}}</h2>
+    </div>
+    <div class="card-body">
+
+
+
+        <form (ngSubmit)="onSubmit()" #employeeForm="ngForm">
+
+
+            <div class="form-group">
+
+                <label for="labelFirstName">First name</label>
+
+                <input type="text" class="form-control" id="firstName" required [(ngModel)]="model.firstName"
+                    name="firstName" #firstName="ngModel" #spy>
+
+                <div [hidden]="firstName.valid || firstName.pristine" class="alert alert-danger">FirstName is required
+                </div>
+
+                *Le modele en cours : {{model.firstName}}
+                <br>*Etat du input #spy : {{spy.className}}
+            </div>
+
+
+
+            <div class="form-group">
+                <label for="labelLastName">Last name</label>
+                <input type="text" class="form-control" id="lastName" required [(ngModel)]="model.lastName"
+                    name="lastName" #lastName="ngModel">
+
+                <div [hidden]="lastName.valid || lastName.pristine" class="alert alert-danger">LastName is required
+                </div>
+
+                *Le modele en cours : {{model.lastName}}
+            </div>
+
+
+
+            <div class="form-group">
+                <label for="labelEmail">Email</label>
+                <input type="email" class="form-control" id="email" required [(ngModel)]="model.email" name="email"
+                    placeholder="name@example.com" #email="ngModel">
+
+                <div [hidden]="email.valid || email.pristine" class="alert alert-danger">Email is required </div>
+
+                *Le modele en cours : {{model.email}}
+            </div>
+
+
+            <div class="form-group">
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="active" [(ngModel)]="model.active"
+                        [value]="true">
+                    <label class="form-check-label" for="radio1">Active</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="active" [(ngModel)]="model.active"
+                        [value]="false">
+                    <label class="form-check-label" for="radio2">Not Active</label>
+                </div>
+                <p> *Le modele en cours : {{model.active}}</p>
+
+            </div>
+
+            <button type="submit" class="btn btn-warning" [disabled]="!employeeForm.form.valid">Modify</button>
+        </form>
+
+
+    </div>
+</div>
+
+```
+
+## Affichage des details d'un élément
+
+Fichier : src/app/employee-details/employee-details.component.ts
+
+```typescript
+import { Component, OnInit } from '@angular/core';
+import { Employee } from '../model/employee';
+import { ActivatedRoute, Router } from '@angular/router';
+import { EmployeeService } from '../service/employee.service';
+
+@Component({
+  selector: 'app-employee-details',
+  templateUrl: './employee-details.component.html',
+  styleUrls: ['./employee-details.component.css']
+})
+export class EmployeeDetailsComponent implements OnInit {
+
+  id: number;
+  model: Employee;
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private employeeService: EmployeeService
+    ) { }
+
+  ngOnInit() {
+    this.model = new Employee();
+
+    this.id = this.route.snapshot.params['id'];
+    
+    this.employeeService.getEmployee(this.id)
+      .subscribe(
+        data => {
+          console.log(data)
+          this.model = data;
+        }, 
+      error => console.log(error)
+      );
+  }
+
+  list(){
+    this.router.navigate(['employees']);
+  }
+}
+
+```
+
+Fichier : src/app/employee-details/employee-details.component.html
+
+```html
+
+<div class="card">
+    <div class="card-header">
+        <h2>Employee Details</h2>
+    </div>
+    <div class="card-body">
+
+        
+        <div *ngIf="model">
+         
+
+            <form>
+
+                <div class="form-group">
+        
+                  <label for="labelFirstName">First name</label>
+        
+                  <input type="text" class="form-control" id="firstName" 
+                    [(ngModel)]="model.firstName"  name="firstName" disabled>
+
+                </div>
+        
+                <div class="form-group">
+                  <label for="labelLastName">Last name</label>
+                  <input type="text" class="form-control" id="lastName"
+                    [(ngModel)]="model.lastName" name="lastName" disabled>
+        
+                </div>
+        
+                <div class="form-group">
+                  <label for="labelEmail">Email</label>
+                  <input type="email" class="form-control" id="email"
+                    [(ngModel)]="model.email" name="email" disabled> 
+        
+                </div>
+        
+                <div class="form-group">
+                    <div *ngIf="model.active; then thenBlock else elseBlock"></div>
+                    <ng-template #thenBlock><button type="button" class="btn btn-outline-success btn-sm">ON</button></ng-template>
+                    <ng-template #elseBlock><button type="button" class="btn btn-outline-danger btn-sm">OFF</button></ng-template>
+                </div>
+        
+                <button class="btn btn-secondary" (click)="list()" >Retrun</button>
+        
+              </form>
+        </div>
+
+       
+
+    </div>
+</div>
+
+```
