@@ -76,6 +76,8 @@ Modifier le fichier : src/app/app.component.html
         </li>
     </ul>
 </nav>
+
+
 <div class="container">
     <br>
     <h2>{{title}}</h2>
@@ -83,11 +85,10 @@ Modifier le fichier : src/app/app.component.html
     <router-outlet></router-outlet> 
 </div>
 
-<footer class="footer">
-    <div class="container">
-        <span>Test Footer</span>
-    </div>
-</footer>
+
+<nav class="navbar fixed-bottom navbar-expand-sm navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Angular app</a>
+</nav>
 ```
 
 Modifier le fichier : src/app/app.component.ts
