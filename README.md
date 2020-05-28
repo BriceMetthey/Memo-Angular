@@ -4,7 +4,11 @@
 
 https://angular.io/guide/forms
 
-## Le back-end 
+[Exemple de CRUD](#CRUD)
+
+## Exemple complet de CRUD {#CRUD}
+
+### Le back-end Java
 
 Rappel : `mvn spring-boot:run` 
 
@@ -223,7 +227,7 @@ public class ResourceNotFoundException extends Exception{
 }
 ```
 
-## Setup Angular
+### Setup Angular
 
 `npm install -g @angular/cli`
 
@@ -231,13 +235,13 @@ public class ResourceNotFoundException extends Exception{
 
 `ng new my-app`
 
-## Démarrage d'une appli Angular
+### Démarrage d'une appli Angular
 
 `cd my-app`
 
 `ng serve --open`
 
-## Intégrer Bootstrap et JQuery
+### Intégrer Bootstrap et JQuery
 
 `npm install bootstrap jquery --save`
 
@@ -260,7 +264,7 @@ Dans angular.json ajouter :
 
 ```
 
-## Avant de commencer
+### Avant de commencer
 
 
 Le fichier : src/index.html
@@ -325,7 +329,7 @@ export class AppComponent {
 }
 ```
 
-## Liste des Composants, Services, et Modules
+### Liste des Composants, Services, et Modules
 
 Components
 * create-employee
@@ -344,7 +348,7 @@ Modules
 Employee Class
 * employee.ts: class Employee
 
-## Angular CLI
+### Angular CLI
 
 `cd src/app`
 
@@ -355,7 +359,7 @@ Employee Class
 - `ng generate component update-employee`
 - `ng generate class model/Employee`
 
-## Le modèle
+### Le modèle
 
 Modification de src/app/model/employee.ts
 
@@ -371,7 +375,7 @@ export class Employee {
 
 ```
 
-## Les Modules
+### Les Modules
 
 Activation des modules HTTP et du module pour les formulaires.
 Ici les formulaires sont de type : Template-driven forms.
@@ -412,7 +416,7 @@ import { UpdateEmployeeComponent } from './update-employee/update-employee.compo
 export class AppModule { }
 ```
 
-## Le service
+### Le service
 
 
 
@@ -462,7 +466,7 @@ export class EmployeeService {
 
 ```
 
-## Le routage
+### Le routage
 
 On modifie : src/app/app-routing.module.ts
 
@@ -492,7 +496,7 @@ export class AppRoutingModule { }
 
 ```
 
-## Liste des éléments
+### Liste des éléments
 
 Fichier : src/app/employee-list/employee-list.component.ts
 
@@ -597,7 +601,7 @@ Fichier :  src/app/employee-list/employee-list.component.html
 </div>
 ```
 
-## Style général
+### Style général
 
 Le fichier : src/styles.css
 
@@ -612,7 +616,7 @@ Le fichier : src/styles.css
 }
 ```
 
-## Formulaire de création
+### Formulaire de création
 
 Fichier : src/app/create-employee/create-employee.component.ts
 
@@ -785,7 +789,7 @@ Fichier : src/app/create-employee/create-employee.component.html
 
 ```
 
-## Formulaire de modification
+### Formulaire de modification
 
 Fichier : 
 
@@ -931,7 +935,7 @@ Fichier : src/app/update-employee/update-employee.component.html
 
 ```
 
-## Affichage des détails d'un élément
+### Affichage des détails d'un élément
 
 Fichier : src/app/employee-details/employee-details.component.ts
 
