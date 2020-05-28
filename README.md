@@ -46,7 +46,7 @@ Dans angular.json ajouter :
 
 Le fichier : src/index.html
 
-```
+```html
 <!doctype html>
 <html lang="en">
 <head>
