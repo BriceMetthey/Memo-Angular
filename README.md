@@ -273,9 +273,9 @@ export class AppRoutingModule { }
 
 ```
 
-## Liste des employés
+## Liste des éléments
 
-On modifie src/app/employee-list/employee-list.component.ts
+Fichier : src/app/employee-list/employee-list.component.ts
 
 ```typescript
 import { Component, OnInit } from '@angular/core';
@@ -330,12 +330,16 @@ export class EmployeeListComponent implements OnInit {
     this.router.navigate(['details', id]);
   }
 
+  updateEmployee(id: number) {
+    this.router.navigate(['update', id]);
+  }
+
 }
 ```
 
-Modifier : src/app/employee-list/employee-list.component.html
+Fichier :  src/app/employee-list/employee-list.component.html
 
-```
+```html
 <div class="card">
     <div class="card-header">
         <h2>Employee List</h2>
@@ -358,7 +362,11 @@ Modifier : src/app/employee-list/employee-list.component.html
                     <td>{{employee.firstName}}</td>
                     <td>{{employee.lastName}}</td>
                     <td>{{employee.email}}</td>
-                    <td>{{employee.active}}</td>
+                    <td>
+                        <div *ngIf="employee.active; then thenBlock else elseBlock"></div>
+                        <ng-template #thenBlock><button type="button" class="btn btn-outline-success btn-sm">ON</button></ng-template>
+                        <ng-template #elseBlock><button type="button" class="btn btn-outline-danger btn-sm">OFF</button></ng-template>
+                    </td>
                     <td><button (click)="deleteEmployee(employee.id)"   class="btn btn-danger">Delete</button>
                         <button (click)="updateEmployee(employee.id)"   class="btn btn-warning" style="margin-left: 10px">Update</button>
                         <button (click)="employeeDetails(employee.id)"  class="btn btn-info"    style="margin-left: 10px">Details</button>
