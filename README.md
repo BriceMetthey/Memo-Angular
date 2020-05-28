@@ -4,6 +4,223 @@
 
 https://angular.io/guide/forms
 
+## Le back-end 
+
+Fichier : Employee.java
+
+```java
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table
+public class Employee {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+    
+    @Column(nullable = false)
+    private String firstName;
+
+    @Column(nullable = false)
+    private String lastName;
+
+    @Column(nullable = false)
+    private String email;
+
+    @Column(nullable = false)
+    private boolean active;
+ 
+    public Employee() { }
+ 
+    public Employee(String firstName, String lastName, String email, boolean active) {
+         this.firstName = firstName;
+         this.lastName = lastName;
+         this.email = email;
+         this.active = active;
+    }
+
+```
+
+Fichier : EmployeeRepository.java
+
+```java
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import fr.bme.demo.model.Employee;
+
+@Repository
+public interface EmployeeRepository extends JpaRepository<Employee, Long>{
+    
+}
+```
+
+Fichier : EmployeeController.java
+
+```java
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import fr.bme.demo.model.Employee;
+import fr.bme.demo.repository.EmployeeRepository;
+
+@RestController 
+@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/api/v1")
+public class EmployeeController {
+    
+    @Autowired
+    private EmployeeRepository employeeRepository;
+
+    @GetMapping("/employees")
+    public List<Employee> getAllEmployees() {
+        return employeeRepository.findAll();
+    }
+
+    @GetMapping("/employees/{id}")
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable(value = "id") Long employeeId)
+        throws ResourceNotFoundException {
+        
+        Employee employee = employeeRepository.findById(employeeId)
+          .orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + employeeId));
+        
+          return ResponseEntity.ok().body(employee);
+    }
+    
+    @PostMapping("/employees")
+    public Employee createEmployee(@Valid @RequestBody Employee employee) {
+        return employeeRepository.save(employee);
+    }
+
+    @PutMapping("/employees/{id}")
+    public ResponseEntity<Employee> updateEmployee(@PathVariable(value = "id") Long employeeId,
+         @Valid @RequestBody Employee employeeDetails) throws ResourceNotFoundException {
+        
+        Employee employee = employeeRepository.findById(employeeId)
+        .orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + employeeId));
+
+        employee.setActive(employeeDetails.getActive());
+        employee.setEmail(employeeDetails.getEmail());
+        employee.setLastName(employeeDetails.getLastName());
+        employee.setFirstName(employeeDetails.getFirstName());
+        
+        final Employee updatedEmployee = employeeRepository.save(employee);
+        
+        return ResponseEntity.ok(updatedEmployee);
+    }
+
+    @DeleteMapping("/employees/{id}")
+    public Map<String, Boolean> deleteEmployee(@PathVariable(value = "id") Long employeeId)
+         throws ResourceNotFoundException {
+        
+        Employee employee = employeeRepository.findById(employeeId)
+       .orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + employeeId));
+
+        employeeRepository.delete(employee);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("deleted", Boolean.TRUE);
+        
+        return response;
+    }
+}
+```
+
+Fichier : ErrorDetails.java
+
+```java
+import java.util.Date;
+
+public class ErrorDetails {
+    private Date timestamp;
+    private String message;
+    private String details;
+
+    public ErrorDetails(Date timestamp, String message, String details) {
+        super();
+        this.timestamp = timestamp;
+        this.message = message;
+        this.details = details;
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public String getMessage() {
+         return message;
+    }
+
+    public String getDetails() {
+         return details;
+    }
+}
+
+```
+
+Fichier : GlobalExceptionHandler.java
+
+```java
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.WebRequest;
+
+@ControllerAdvice
+public class GlobalExceptionHandler {
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<?> resourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
+         ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
+         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<?> globleExcpetionHandler(Exception ex, WebRequest request) {
+        ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
+        return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+}
+
+```
+
+Fichier : ResourceNotFoundException.java
+
+```java
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
+public class ResourceNotFoundException extends Exception{
+
+    private static final long serialVersionUID = 1L;
+
+    public ResourceNotFoundException(String message){
+        super(message);
+    }
+}
+```
+
 ## Setup Angular
 
 `npm install -g @angular/cli`
