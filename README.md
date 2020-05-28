@@ -1,12 +1,9 @@
 # Mémo Angular
 
-## Références documentaires
+* [Exemple de CRUD](#exemple-de-crud)
 
-https://angular.io/guide/forms
 
-[Exemple de CRUD](#CRUD)
-
-## Exemple complet de CRUD {#CRUD}
+## Exemple de CRUD
 
 ### Le back-end Java
 
