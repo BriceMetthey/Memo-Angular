@@ -154,7 +154,8 @@ export class Employee {
 
 ## Les Modules
 
-Activation des modules HTTP et du module pour les formulaires
+Activation des modules HTTP et du module pour les formulaires.
+Ici les formulaires sont de type : Template-driven forms.
 
 On modifie : src/app/app.module.ts
 
