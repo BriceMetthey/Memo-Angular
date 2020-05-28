@@ -712,7 +712,7 @@ Fichier : src/app/update-employee/update-employee.component.html
 
 ```
 
-## Affichage des details d'un élément
+## Affichage des détails d'un élément
 
 Fichier : src/app/employee-details/employee-details.component.ts
 
