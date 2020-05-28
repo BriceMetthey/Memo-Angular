@@ -395,6 +395,8 @@ Le fichier : src/styles.css
 
 ## Formulaire de création
 
+Fichier : src/app/create-employee/create-employee.component.ts
+
 ```typescript
 
 import { Component, OnInit } from '@angular/core';
@@ -447,6 +449,8 @@ export class CreateEmployeeComponent implements OnInit {
 
 
 ```
+
+Fichier : src/app/create-employee/create-employee.component.html
 
 ```html
 
