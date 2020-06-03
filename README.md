@@ -2,7 +2,7 @@
 
 
 | Domaines        | Liens                               |
-| --------------- |:-----------------------------------:|
+| --------------- |-------------------------------------|
 | Exemple de CRUD | [Exemple de CRUD](#exemple-de-crud) |
 |                 | [Back-end](#back-end-java)          |
 |                 | [Angular](#setup-angular)           |
