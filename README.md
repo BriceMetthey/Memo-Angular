@@ -1,8 +1,10 @@
 # Mémo Angular
 
 * [Exemple de CRUD](#exemple-de-crud)
-** [Back-end](#back-end-java)
-** [Angular](#setup-angular)
+
+[Back-end](#back-end-java)
+
+[Angular](#setup-angular)
 
 
 ## Exemple de CRUD
