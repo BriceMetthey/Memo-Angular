@@ -1,10 +1,11 @@
 # Mémo Angular
 
-* [Exemple de CRUD](#exemple-de-crud)
 
-[Back-end](#back-end-java)
-
-[Angular](#setup-angular)
+| Domaines        | Liens                               |
+| --------------- |:-----------------------------------:|
+| Exemple de CRUD | [Exemple de CRUD](#exemple-de-crud) |
+|                 | [Back-end](#back-end-java)          |
+|                 | [Angular](#setup-angular)           |
 
 
 ## Exemple de CRUD
