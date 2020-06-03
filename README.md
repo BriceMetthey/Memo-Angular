@@ -1,11 +1,13 @@
 # Mémo Angular
 
 * [Exemple de CRUD](#exemple-de-crud)
+** [Back-end](#back-end-java)
+** [Angular](#setup-angular)
 
 
 ## Exemple de CRUD
 
-### Le back-end Java
+### Back-end Java
 
 Rappel : `mvn spring-boot:run` 
 
