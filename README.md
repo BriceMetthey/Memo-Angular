@@ -247,6 +247,14 @@ public class ResourceNotFoundException extends Exception{
 
 `npm install bootstrap jquery --save`
 
+ou pour être plus carré sur les versions :
+
+
+`npm install --save jquery@3.5.1`
+`npm install --save bootstrap@4.5.0`
+
+On doit voir le resultat dans package.json
+
 Dans angular.json ajouter :
 
 ```javascript
