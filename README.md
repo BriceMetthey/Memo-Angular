@@ -7,6 +7,9 @@
 |                 | [Back-end](#back-end-java)          |
 |                 | [Angular](#setup-angular)           |
 
+## Liens utiles
+
+[Angular from scratch en français (Video)](https://www.youtube.com/watch?v=uYhAfgEwNWA)
 
 ## Exemple de CRUD
 
