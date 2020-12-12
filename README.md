@@ -10,11 +10,17 @@
 ## Liens utiles
 
 [Angular from scratch en français (Video)](https://www.youtube.com/watch?v=uYhAfgEwNWA)
+
 [Cours complet (Video)](https://youtu.be/oj2DZtFFiaM)
+
 [Cours écrit (Blog)](https://guide-angular.wishtack.io/angular)
+
 [VSCode avec Angular](https://code.visualstudio.com/docs/nodejs/angular-tutorial)
+
 [Intro Angular 30 minutes](https://www.youtube.com/watch?v=zdsb5Kn91F4)
+
 [Une chaine complète de cours](https://www.youtube.com/watch?v=zdsb5Kn91F4&list=PLuWyq_EO5_ALVh9pDGwt7sq6NeXqyaaKv)
+
 
 ## Exemple de CRUD
 
