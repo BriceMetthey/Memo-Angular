@@ -251,6 +251,10 @@ public class ResourceNotFoundException extends Exception{
 
 `ng new my-app`
 
+### Internationalization
+
+https://dev.to/batbrain9392/internationalization-with-angular-v10-693
+
 ### Démarrage d'une appli Angular
 
 `cd my-app`
