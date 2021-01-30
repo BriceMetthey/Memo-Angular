@@ -1,12 +1,6 @@
 # Mémo Angular
 
 
-| Domaines        | Liens                               |
-|-----------------|-------------------------------------|
-| Exemple de CRUD | [Exemple de CRUD](#exemple-de-crud) |
-|                 | [Back-end](#back-end-java)          |
-|                 | [Angular](#setup-angular)           |
-
 ## Liens utiles
 
 [Angular from scratch en français (Video)](https://www.youtube.com/watch?v=uYhAfgEwNWA)
@@ -22,228 +16,7 @@
 [Une chaine complète de cours](https://www.youtube.com/watch?v=zdsb5Kn91F4&list=PLuWyq_EO5_ALVh9pDGwt7sq6NeXqyaaKv)
 
 
-## Exemple de CRUD
-
-### Back-end Java
-
-Rappel : `mvn spring-boot:run` 
-
-Fichier : Employee.java
-
-```java
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Table
-public class Employee {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    
-    @Column(nullable = false)
-    private String firstName;
-
-    @Column(nullable = false)
-    private String lastName;
-
-    @Column(nullable = false)
-    private String email;
-
-    @Column(nullable = false)
-    private boolean active;
- 
-    public Employee() { }
- 
-    public Employee(String firstName, String lastName, String email, boolean active) {
-         this.firstName = firstName;
-         this.lastName = lastName;
-         this.email = email;
-         this.active = active;
-    }
-
-```
-
-Fichier : EmployeeRepository.java
-
-```java
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
-import fr.bme.demo.model.Employee;
-
-@Repository
-public interface EmployeeRepository extends JpaRepository<Employee, Long>{
-    
-}
-```
-
-Fichier : EmployeeController.java
-
-```java
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import fr.bme.demo.model.Employee;
-import fr.bme.demo.repository.EmployeeRepository;
-
-@RestController 
-@CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping("/api/v1")
-public class EmployeeController {
-    
-    @Autowired
-    private EmployeeRepository employeeRepository;
-
-    @GetMapping("/employees")
-    public List<Employee> getAllEmployees() {
-        return employeeRepository.findAll();
-    }
-
-    @GetMapping("/employees/{id}")
-    public ResponseEntity<Employee> getEmployeeById(@PathVariable(value = "id") Long employeeId)
-        throws ResourceNotFoundException {
-        
-        Employee employee = employeeRepository.findById(employeeId)
-          .orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + employeeId));
-        
-          return ResponseEntity.ok().body(employee);
-    }
-    
-    @PostMapping("/employees")
-    public Employee createEmployee(@Valid @RequestBody Employee employee) {
-        return employeeRepository.save(employee);
-    }
-
-    @PutMapping("/employees/{id}")
-    public ResponseEntity<Employee> updateEmployee(@PathVariable(value = "id") Long employeeId,
-         @Valid @RequestBody Employee employeeDetails) throws ResourceNotFoundException {
-        
-        Employee employee = employeeRepository.findById(employeeId)
-        .orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + employeeId));
-
-        employee.setActive(employeeDetails.getActive());
-        employee.setEmail(employeeDetails.getEmail());
-        employee.setLastName(employeeDetails.getLastName());
-        employee.setFirstName(employeeDetails.getFirstName());
-        
-        final Employee updatedEmployee = employeeRepository.save(employee);
-        
-        return ResponseEntity.ok(updatedEmployee);
-    }
-
-    @DeleteMapping("/employees/{id}")
-    public Map<String, Boolean> deleteEmployee(@PathVariable(value = "id") Long employeeId)
-         throws ResourceNotFoundException {
-        
-        Employee employee = employeeRepository.findById(employeeId)
-       .orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + employeeId));
-
-        employeeRepository.delete(employee);
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("deleted", Boolean.TRUE);
-        
-        return response;
-    }
-}
-```
-
-Fichier : ErrorDetails.java
-
-```java
-import java.util.Date;
-
-public class ErrorDetails {
-    private Date timestamp;
-    private String message;
-    private String details;
-
-    public ErrorDetails(Date timestamp, String message, String details) {
-        super();
-        this.timestamp = timestamp;
-        this.message = message;
-        this.details = details;
-    }
-
-    public Date getTimestamp() {
-        return timestamp;
-    }
-
-    public String getMessage() {
-         return message;
-    }
-
-    public String getDetails() {
-         return details;
-    }
-}
-
-```
-
-Fichier : GlobalExceptionHandler.java
-
-```java
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
-
-@ControllerAdvice
-public class GlobalExceptionHandler {
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<?> resourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
-         ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
-         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> globleExcpetionHandler(Exception ex, WebRequest request) {
-        ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
-        return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-}
-
-```
-
-Fichier : ResourceNotFoundException.java
-
-```java
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
-@ResponseStatus(value = HttpStatus.NOT_FOUND)
-public class ResourceNotFoundException extends Exception{
-
-    private static final long serialVersionUID = 1L;
-
-    public ResourceNotFoundException(String message){
-        super(message);
-    }
-}
-```
-
-### Setup Angular
+## Setup Angular
 
 `npm install -g @angular/cli`
 
@@ -251,129 +24,22 @@ public class ResourceNotFoundException extends Exception{
 
 `ng new my-app`
 
-### Internationalization
+## Internationalization
 
 https://dev.to/batbrain9392/internationalization-with-angular-v10-693
 
-### Démarrage d'une appli Angular
+## Démarrage d'une appli Angular
 
 `cd my-app`
 
 `ng serve --open`
 
-### Intégrer Bootstrap et JQuery
+## Intégrer Bootstrap et JQuery
 
-`npm install bootstrap jquery --save`
-
-ou pour être plus carré sur les versions :
+A revoir
 
 
-`npm install --save jquery@3.5.1`
-
-`npm install --save bootstrap@4.5.0`
-
-On doit voir le resultat dans package.json
-
-Dans angular.json ajouter :
-
-```javascript
-
-...
- 
-"build": {
-          ...
-            "styles": [
-              "src/styles.css",
-              "node_modules/bootstrap/dist/css/bootstrap.min.css"
-            ],
-            "scripts": [
-              "node_modules/jquery/dist/jquery-3.5.1.slim.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
-            ]
-          },
-...
-
- "test": {
-         ...
-            "styles": [
-              "src/styles.css",
-              "node_modules/bootstrap/dist/css/bootstrap.min.css"
-            ],
-            "scripts": [
-              "node_modules/jquery/dist/jquery-3.5.1.slim.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
-            ]
-          }
-        },
-
-```
-
-### Avant de commencer
-
-
-Le fichier : src/index.html
-
-```html
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Mon application Angular</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-</head>
-<body>
-  <app-root></app-root>
-</body>
-</html>
-```
-
-Le fichier : src/app/app.component.html
-
-```html
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <!-- Links -->
-    <ul class="navbar-nav">
-        <li class="nav-item">
-            <a routerLink="employees" class="nav-link" routerLinkActive="active">Employee List</a>
-        </li>
-        <li class="nav-item">
-            <a routerLink="add" class="nav-link" routerLinkActive="active">Add Employee</a>
-        </li>
-    </ul>
-</nav>
-
-
-<div class="container">
-    <br>
-    <h2>{{title}}</h2>
-    <hr>
-    <router-outlet></router-outlet> 
-</div>
-
-
-<nav class="navbar fixed-bottom navbar-expand-sm navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Angular app</a>
-</nav>
-```
-
-Le fichier : src/app/app.component.ts
-
-```typescript
-import { Component } from '@angular/core';
-
-@Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
-})
-export class AppComponent {
-  title = 'App Angular';
-}
-```
-
-### Liste des Composants, Services, et Modules
+## Liste des Composants, Services, et Modules
 
 Components
 * create-employee
@@ -392,7 +58,7 @@ Modules
 Employee Class
 * employee.ts: class Employee
 
-### Angular CLI
+## Angular CLI
 
 `cd src/app`
 
@@ -403,7 +69,7 @@ Employee Class
 - `ng generate component update-employee`
 - `ng generate class model/Employee`
 
-### Le modèle
+## Le modèle
 
 Modification de src/app/model/employee.ts
 
@@ -419,7 +85,7 @@ export class Employee {
 
 ```
 
-### Les Modules
+## Les Modules
 
 Activation des modules HTTP et du module pour les formulaires.
 Ici les formulaires sont de type : Template-driven forms.
@@ -460,7 +126,7 @@ import { UpdateEmployeeComponent } from './update-employee/update-employee.compo
 export class AppModule { }
 ```
 
-### Le service
+## Le service
 
 
 
@@ -510,7 +176,7 @@ export class EmployeeService {
 
 ```
 
-### Le routage
+## Le routage
 
 On modifie : src/app/app-routing.module.ts
 
@@ -540,7 +206,7 @@ export class AppRoutingModule { }
 
 ```
 
-### Liste des éléments
+## Liste des éléments
 
 Fichier : src/app/employee-list/employee-list.component.ts
 
@@ -645,7 +311,7 @@ Fichier :  src/app/employee-list/employee-list.component.html
 </div>
 ```
 
-### Style général
+## Style général
 
 Le fichier : src/styles.css
 
@@ -660,7 +326,7 @@ Le fichier : src/styles.css
 }
 ```
 
-### Formulaire de création
+## Formulaire de création
 
 Fichier : src/app/create-employee/create-employee.component.ts
 
@@ -833,7 +499,7 @@ Fichier : src/app/create-employee/create-employee.component.html
 
 ```
 
-### Formulaire de modification
+## Formulaire de modification
 
 Fichier : 
 
@@ -979,7 +645,7 @@ Fichier : src/app/update-employee/update-employee.component.html
 
 ```
 
-### Affichage des détails d'un élément
+## Affichage des détails d'un élément
 
 Fichier : src/app/employee-details/employee-details.component.ts
 
